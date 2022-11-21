@@ -2,7 +2,7 @@ import numpy
 import time
 import matplotlib.pyplot as plt
 
-TYPES = {"fast", "middle", "slow"}
+TYPES = ["fast", "middle", "slow"]
 
 def start():
 
@@ -62,6 +62,7 @@ def example1():
 
     return total_time
 
+
 def example2(completeness="extremes"):
 
     time_list = []
@@ -76,19 +77,89 @@ def example2(completeness="extremes"):
         for type_i in TYPES:
             for type_j in TYPES:
                 for type_z in TYPES:
+                    total_time = start()
                     total_time += perceptualstep(type=type_i)
                     total_time += cognitivestep(type=type_j)
                     total_time += motorstep(type=type_z)
                     time_list.append(total_time)
         plt.boxplot(time_list)
-
+        plt.show()
 
     return time_list
 
 
+def example3():
+
+    time_list = []
+    for type_i in TYPES:
+        for type_j in TYPES:
+            for type_z in TYPES:
+                total_time = start()
+                total_time += perceptualstep(type=type_i)
+                total_time += perceptualstep(type=type_i)
+                total_time += cognitivestep(type=type_j)
+                total_time += cognitivestep(type=type_j)
+                total_time += motorstep(type=type_z)
+                time_list.append(total_time)
+
+    return
+
+
+def example4():
+
+    stimulus2_time_options = [40, 80, 110, 150, 210, 240]
+
+    time_list = []
+    for stimulus2_time in stimulus2_time_options:
+        for type_i in TYPES:
+            for type_j in TYPES:
+                for type_z in TYPES:
+                    total_time = start()
+                    total_time += perceptualstep(type=type_i)
+                    total_time += perceptualstep(type=type_i) + stimulus2_time
+                    total_time += cognitivestep(type=type_j)
+                    total_time += cognitivestep(type=type_j)
+                    total_time += motorstep(type=type_z)
+                    time_list.append(total_time)
+
+    return
+
+
+def example5():
+
+    error = 0.01
+    error_dict = {"fast": 3, "middle": 2, "slow": 0.5}
+
+    time_list = []
+    error_list = []
+    for type_i in TYPES:
+        print(">")
+        for type_j in TYPES:
+            for type_z in TYPES:
+                total_time = start()
+                total_time += perceptualstep(type=type_i)
+                error += error * error_dict[type_i]
+                total_time += perceptualstep(type=type_i)
+                error += error * error_dict[type_i]
+                total_time += cognitivestep(type=type_j)
+                error += error * error_dict[type_j]
+                total_time += cognitivestep(type=type_j)
+                error += error * error_dict[type_j]
+                total_time += motorstep(type=type_z)
+                error += error * error_dict[type_z]
+                time_list.append(total_time)
+                error_list.append(error_list)
+
+    plt.scatter(time_list, error_list)
+    plt.show()
+
+    return
+
+
+
 def main():
 
-    print(example2())
+    print(example5())
 
 
 if __name__ == '__main__':
