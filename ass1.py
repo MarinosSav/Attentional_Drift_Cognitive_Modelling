@@ -11,23 +11,29 @@ def start():
 
 def perceptualstep():
 
+    t_percept = 100
+
     start_time = time.time()
 
-    return round((time.time() - start_time) * 1000)
+    return round((time.time() - start_time) * 1000) + t_percept
 
 
 def cognitivestep():
 
+    t_cog = 70
+
     start_time = time.time()
 
-    return round((time.time() - start_time) * 1000)
+    return round((time.time() - start_time) * 1000) + t_cog
 
 
 def motorstep():
 
+    t_motor = 70
+
     start_time = time.time()
 
-    return round((time.time() - start_time) * 1000)
+    return round((time.time() - start_time) * 1000) + t_motor
 
 
 def example1():
@@ -40,7 +46,8 @@ def example1():
     return total_time
 
 def main():
-    pass
+
+    print(example1())
 
 
 if __name__ == '__main__':
