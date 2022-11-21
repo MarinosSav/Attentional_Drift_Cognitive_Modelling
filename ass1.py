@@ -1,4 +1,4 @@
-import numpy
+import numpy as np
 import time
 import matplotlib.pyplot as plt
 
@@ -100,9 +100,11 @@ def example3():
                 total_time += cognitivestep(type=type_j)
                 total_time += cognitivestep(type=type_j)
                 total_time += motorstep(type=type_z)
+                if type_i == "fast" and type_j == "middle" and type_z == "slow":
+                    print(total_time)
                 time_list.append(total_time)
 
-    return
+    return time_list
 
 
 def example4():
@@ -122,7 +124,7 @@ def example4():
                     total_time += motorstep(type=type_z)
                     time_list.append(total_time)
 
-    return
+    return time_list
 
 
 def example5():
@@ -133,24 +135,26 @@ def example5():
     time_list = []
     error_list = []
     for type_i in TYPES:
-        print(">")
         for type_j in TYPES:
             for type_z in TYPES:
                 total_time = start()
                 total_time += perceptualstep(type=type_i)
-                error += error * error_dict[type_i]
                 total_time += perceptualstep(type=type_i)
                 error += error * error_dict[type_i]
                 total_time += cognitivestep(type=type_j)
-                error += error * error_dict[type_j]
                 total_time += cognitivestep(type=type_j)
                 error += error * error_dict[type_j]
                 total_time += motorstep(type=type_z)
                 error += error * error_dict[type_z]
                 time_list.append(total_time)
-                error_list.append(error_list)
+                error_list.append(error)
+                error = 0.01
 
-    plt.scatter(time_list, error_list)
+    #print(error_list)
+    plt.scatter(np.array(time_list), np.array(error_list))
+    plt.xlabel("time (ms)")
+    plt.ylabel("error (%)")
+    plt.title("Time and Error for Human Processor Task for Different Input Types")
     plt.show()
 
     return
